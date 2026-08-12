@@ -159,3 +159,30 @@ class InvoiceAPITests(APITestCase):
         self.assertGreaterEqual(result.data["data"]["updated"], 1)
         inv.refresh_from_db()
         self.assertEqual(inv.status, InvoiceStatus.OVERDUE)
+
+    def test_cancel_invoice_and_block_paid_cancel(self):
+        self.client.credentials(**auth_header(self.accountant))
+        created = self.client.post(self.list_url, self._payload(), format="json")
+        self.assertEqual(created.status_code, status.HTTP_201_CREATED, created.data)
+        iid = created.data["data"]["id"]
+
+        cancelled = self.client.post(reverse("invoices-cancel", args=[iid]))
+        self.assertEqual(cancelled.status_code, status.HTTP_200_OK, cancelled.data)
+        self.assertEqual(cancelled.data["data"]["status"], InvoiceStatus.CANCELLED)
+
+        again = self.client.post(reverse("invoices-cancel", args=[iid]))
+        self.assertEqual(again.status_code, status.HTTP_400_BAD_REQUEST)
+
+        # Paid invoice cannot be cancelled
+        paid_invoice = self.client.post(self.list_url, self._payload(), format="json")
+        paid_id = paid_invoice.data["data"]["id"]
+        from apps.invoices.models import Invoice
+
+        inv = Invoice.objects.get(pk=paid_id)
+        inv.paid_amount = inv.total
+        inv.balance = Decimal("0.00")
+        inv.status = InvoiceStatus.PAID
+        inv.save(update_fields=["paid_amount", "balance", "status", "updated_at"])
+
+        blocked = self.client.post(reverse("invoices-cancel", args=[paid_id]))
+        self.assertEqual(blocked.status_code, status.HTTP_400_BAD_REQUEST)

@@ -145,3 +145,32 @@ class DashboardReportsAPITests(APITestCase):
 
         missing = self.client.get(reverse("reports-detail", args=["unknown"]))
         self.assertEqual(missing.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_all_report_types_and_export_formats(self):
+        self.client.credentials(**auth_header(self.admin))
+        types = self.client.get(reverse("reports-list")).data["data"]["reports"]
+        self.assertEqual(
+            set(types),
+            {"sales", "purchases", "invoices", "payments", "expenses", "inventory"},
+        )
+
+        for report_type in types:
+            detail = self.client.get(reverse("reports-detail", args=[report_type]))
+            self.assertEqual(
+                detail.status_code, status.HTTP_200_OK, f"{report_type}: {detail.data}"
+            )
+            self.assertIn("summary", detail.data["data"])
+            self.assertIn("rows", detail.data["data"])
+            self.assertIn("columns", detail.data["data"])
+
+            for fmt in ("csv", "xlsx", "pdf"):
+                exported = self.client.get(
+                    reverse("reports-export", args=[report_type]),
+                    {"export_format": fmt},
+                )
+                self.assertEqual(
+                    exported.status_code,
+                    status.HTTP_200_OK,
+                    f"{report_type}/{fmt}",
+                )
+                self.assertTrue(len(exported.content) > 0)

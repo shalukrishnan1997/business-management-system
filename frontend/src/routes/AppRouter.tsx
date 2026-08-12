@@ -3,9 +3,22 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { GuestRoute } from "@/features/auth/GuestRoute";
 import { ProtectedRoute } from "@/features/auth/ProtectedRoute";
 import { AppShell } from "@/layouts/AppShell";
+import { AuditPage } from "@/pages/AuditPage";
+import { CustomersPage } from "@/pages/CustomersPage";
 import { DashboardPage } from "@/pages/DashboardPage";
+import { EmployeesPage } from "@/pages/EmployeesPage";
+import { ExpensesPage } from "@/pages/ExpensesPage";
+import { InventoryPage } from "@/pages/InventoryPage";
+import { InvoicesPage } from "@/pages/InvoicesPage";
 import { LoginPage } from "@/pages/LoginPage";
-import { PlaceholderPage } from "@/pages/PlaceholderPage";
+import { NotificationsPage } from "@/pages/NotificationsPage";
+import { PaymentsPage } from "@/pages/PaymentsPage";
+import { ProductsPage } from "@/pages/ProductsPage";
+import { PurchasesPage } from "@/pages/PurchasesPage";
+import { QuotationsPage } from "@/pages/QuotationsPage";
+import { ReportsPage } from "@/pages/ReportsPage";
+import { SalesPage } from "@/pages/SalesPage";
+import { SuppliersPage } from "@/pages/SuppliersPage";
 
 export function AppRouter() {
   return (
@@ -17,133 +30,20 @@ export function AppRouter() {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppShell />}>
           <Route index element={<DashboardPage />} />
-          <Route
-            path="customers"
-            element={
-              <PlaceholderPage
-                title="Customers"
-                description="CRUD, outstanding balances, statements, and history tabs."
-              />
-            }
-          />
-          <Route
-            path="suppliers"
-            element={
-              <PlaceholderPage
-                title="Suppliers"
-                description="Supplier directory and payable outstanding views."
-              />
-            }
-          />
-          <Route
-            path="products"
-            element={
-              <PlaceholderPage
-                title="Products"
-                description="Categories, catalog, pricing, and low-stock badges."
-              />
-            }
-          />
-          <Route
-            path="inventory"
-            element={
-              <PlaceholderPage
-                title="Inventory"
-                description="Stock ledger, adjustments, and product history."
-              />
-            }
-          />
-          <Route
-            path="purchases"
-            element={
-              <PlaceholderPage
-                title="Purchases"
-                description="Draft → ordered → received workflows with stock impact."
-              />
-            }
-          />
-          <Route
-            path="sales"
-            element={
-              <PlaceholderPage
-                title="Sales"
-                description="Confirm/complete sales and stock decreases."
-              />
-            }
-          />
-          <Route
-            path="quotations"
-            element={
-              <PlaceholderPage
-                title="Quotations"
-                description="Send, accept, convert to sale, and PDF actions."
-              />
-            }
-          />
-          <Route
-            path="invoices"
-            element={
-              <PlaceholderPage
-                title="Invoices"
-                description="From-sale invoicing, balances, overdue, and email PDF."
-              />
-            }
-          />
-          <Route
-            path="payments"
-            element={
-              <PlaceholderPage
-                title="Payments"
-                description="Customer receipts and supplier payments."
-              />
-            }
-          />
-          <Route
-            path="expenses"
-            element={
-              <PlaceholderPage
-                title="Expenses"
-                description="Expense categories, records, and summaries."
-              />
-            }
-          />
-          <Route
-            path="employees"
-            element={
-              <PlaceholderPage
-                title="Employees"
-                description="Departments, designations, and employee roster."
-              />
-            }
-          />
-          <Route
-            path="reports"
-            element={
-              <PlaceholderPage
-                title="Reports"
-                description="Filtered reports with CSV / Excel / PDF export."
-                phaseHint="Report UI is Phase 22."
-              />
-            }
-          />
-          <Route
-            path="notifications"
-            element={
-              <PlaceholderPage
-                title="Notifications"
-                description="In-app alerts, unread badge, and mark-read actions."
-              />
-            }
-          />
-          <Route
-            path="audit"
-            element={
-              <PlaceholderPage
-                title="Audit log"
-                description="Admin-only trail of mutating API actions."
-              />
-            }
-          />
+          <Route path="customers" element={<CustomersPage />} />
+          <Route path="suppliers" element={<SuppliersPage />} />
+          <Route path="products" element={<ProductsPage />} />
+          <Route path="inventory" element={<InventoryPage />} />
+          <Route path="purchases" element={<PurchasesPage />} />
+          <Route path="sales" element={<SalesPage />} />
+          <Route path="quotations" element={<QuotationsPage />} />
+          <Route path="invoices" element={<InvoicesPage />} />
+          <Route path="payments" element={<PaymentsPage />} />
+          <Route path="expenses" element={<ExpensesPage />} />
+          <Route path="employees" element={<EmployeesPage />} />
+          <Route path="reports" element={<ReportsPage />} />
+          <Route path="notifications" element={<NotificationsPage />} />
+          <Route path="audit" element={<AuditPage />} />
         </Route>
       </Route>
 

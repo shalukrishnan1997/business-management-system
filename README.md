@@ -15,7 +15,7 @@ Manage customers, suppliers, products, inventory, purchases, sales, quotations, 
 | Docs | OpenAPI (drf-spectacular), README, architecture docs |
 | Quality | Service-layer business rules, RBAC, tests, seed data |
 
-> **Status:** Phase 20 — Dashboard UI ready. Next: Phase 21 (CRUD pages).
+> **Status:** Phase 23 — Testing hardened. Next: Phase 24 (Deployment).
 
 ---
 
@@ -42,6 +42,9 @@ See detailed design documents:
 - [API modules](docs/api-modules.md)
 - [Development phases](docs/phases.md)
 - [MVP vs advanced](docs/mvp-vs-advanced.md)
+- [CRUD UI](docs/crud-ui.md)
+- [Reports UI](docs/reports-ui.md)
+- [Testing](docs/testing.md)
 
 ```
 Browser (React)
@@ -146,10 +149,16 @@ Seed command and default credentials will be added with sample data (later phase
 ## Tests
 
 ```bash
-# Backend (after test suite exists)
+# Backend API / integration
 cd backend
 pytest
+
+# Frontend unit helpers
+cd frontend
+npm test
 ```
+
+See [docs/testing.md](docs/testing.md).
 
 ---
 
@@ -157,7 +166,7 @@ pytest
 
 This project is built **phase by phase**. Do not skip ahead without confirming each phase works.
 
-Current phase: **Phase 20 complete — ready for Phase 21 (CRUD pages)**
+Current phase: **Phase 23 complete — ready for Phase 24 (Deployment)**
 
 ---
 
